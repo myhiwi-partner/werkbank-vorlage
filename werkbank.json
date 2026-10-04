@@ -1,0 +1,28 @@
+{
+  "schema": 1,
+  "name": "",
+  "github": "",
+  "werkzeug": "",
+  "starttag": null,
+  "auftrags_repo": "",
+  "stufe": 1,
+  "pausen": [],
+  "meilensteine": {
+    "werkbank_laeuft": {
+      "erreicht": null,
+      "allein_wiederholt": null
+    },
+    "erste_tagesliste": {
+      "erreicht": null,
+      "allein_wiederholt": null
+    },
+    "erstes_gespraech": {
+      "erreicht": null,
+      "allein_wiederholt": null
+    },
+    "erster_abschluss": {
+      "erreicht": null,
+      "allein_wiederholt": null
+    }
+  }
+}

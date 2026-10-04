@@ -1,0 +1,9 @@
+name: pruefen
+# Second guard next to the local pre-commit hook: every push is checked on GitHub too.
+on: [push, pull_request]
+jobs:
+  pruefen:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: python3 scripts/werkbank.py pruefen

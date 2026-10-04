@@ -1,0 +1,22 @@
+# Keys and local secrets never go into the repo
+.env
+.env.*
+!.env.example
+
+# Lists with phone numbers stay in the MyHiwi Drive, never here
+*.csv
+*.xlsx
+*.xls
+*.ods
+*.tsv
+heute/
+anrufe/
+listen/
+
+# macOS and Python
+.DS_Store
+__pycache__/
+
+# Machine-specific: Drive path and last-read marker
+werkbank.local.json
+.claude/settings.local.json
