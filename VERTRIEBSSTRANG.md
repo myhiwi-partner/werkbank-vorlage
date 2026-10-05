@@ -11,7 +11,7 @@ Dein Weg vom Starttag bis zum ersten Abschluss. Der Starttag steht in Denis' Ein
 | Erstes Gespräch gebucht | 2 | Interessent im CRM, Termin mit Denis steht | keine |
 | Erster Abschluss | 2 | Abschlussmeldung im CRM (begleiteter Auftrag) | Tag 30 |
 
-Ein Meilenstein zählt erst, wenn du ihn einmal ohne Hilfe wiederholt hast. Beim ersten Abschluss gilt das nicht, der zählt sofort. Die ersten beiden trägst du mit deiner KI selbst ein. Gespräch und Abschluss sieht der Coach im CRM und bestätigt sie dir im Coach-Issue. Deinen Stand zeigt `python3 scripts/werkbank.py status`. Die maschinenlesbare Fassung dieser Tabelle steht in `vertriebsstrang.json`.
+Die Fristen gelten dafür, dass du einen Meilenstein erreichst. Bestanden ist er erst, wenn du ihn einmal ohne Hilfe wiederholt hast. Beim ersten Abschluss gilt das nicht, der zählt sofort. Die ersten beiden trägst du mit deiner KI selbst ein. Gespräch und Abschluss sieht der Coach im CRM und bestätigt sie dir im Coach-Issue. Deinen Stand zeigt `python3 scripts/werkbank.py status`. Die maschinenlesbare Fassung dieser Tabelle steht in `vertriebsstrang.json`.
 
 Die ersten drei Aufträge sind **begleitet**: Du buchst das Kundengespräch mit Denis und danach deinen eigenen Termin. Ab dem vierten schließt du allein ab.
 

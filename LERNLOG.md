@@ -11,7 +11,7 @@ Hier schreibst du nach jeder Arbeitssitzung ein paar Zeilen auf. Kurz reicht. De
 | 3 Eigene Skills schreiben | erster eigener Skill | |
 | 4 Mit Kundendaten arbeiten | kommt später je Person, Denis schaltet frei | gesperrt |
 
-Eine Stufe ist geschafft, wenn du sie einmal ganz ohne Hilfe wiederholt hast. Dann trägst du das Datum ein. Deine Meilensteine im Vertriebsstrang pflegt die KI in `werkbank.json`.
+Eine Stufe ist geschafft, wenn du sie einmal ganz ohne Hilfe wiederholt hast. Dann trägst du das Datum ein. Deine Meilensteine im Vertriebsstrang trägt die KI mit dir in `werkbank.json` ein.
 
 ## Einträge
 

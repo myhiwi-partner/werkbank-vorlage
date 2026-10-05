@@ -6,8 +6,8 @@ In diesem Ordner arbeitet eine KI mit dir, Codex oder Claude, wie du magst. Sie 
 
 ## So startest du
 
-1. Öffne `EINRICHTUNG.md` hier auf GitHub und mach die ersten vier Schritte im Browser. Du startest dabei in der öffentlichen Vorlage und erzeugst daraus deine eigene, private Werkbank.
-2. Ab Schritt 5 führt dich deine KI. Du öffnest diesen Ordner in Codex oder Claude und schreibst: „Führe mich durch die Einrichtung.“
+1. Öffne `EINRICHTUNG.md` hier auf GitHub. Teil A machst du im Browser, Teil B am Mac nach der Liste. Dabei erzeugst du aus der öffentlichen Vorlage deine eigene, private Werkbank und holst sie auf deinen Rechner.
+2. Ab Teil C führt dich deine KI. Du öffnest den Ordner `werkbank` in Codex oder Claude und schreibst: „Führe mich durch die Einrichtung.“
 3. Danach startest du jeden Tag einfach mit „Guten Morgen“. Die KI sagt dir, was dran ist und ob es Hinweise vom Coach gibt.
 
 ## Was du hier findest
@@ -19,7 +19,7 @@ In diesem Ordner arbeitet eine KI mit dir, Codex oder Claude, wie du magst. Sie 
 | `LERNLOG.md` | Dein Tagebuch fürs Lernen. Denis und der Coach lesen mit |
 | `wissen/` | Angebot, Pitch, Einwände, Anruf-Notiz und die Regeln fürs Telefon |
 | `projekte/` | Deine eigenen Arbeiten, nur mit öffentlichen Angaben |
-| `werkbank.json` | Dein Stand, den die KI für dich pflegt |
+| `werkbank.json` | Dein Stand, den die KI mit dir pflegt |
 
 ## Drei Regeln
 

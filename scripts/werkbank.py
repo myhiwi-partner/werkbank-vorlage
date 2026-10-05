@@ -73,8 +73,13 @@ def parse_date(value, label):
 def load(path):
     try:
         return json.loads(path.read_text(encoding="utf-8"))
-    except (OSError, ValueError) as error:
+    except OSError as error:
         raise Broken("{} unlesbar: {}".format(path.name, error))
+    except ValueError as error:
+        hint = ""
+        if any(q in path.read_text(encoding="utf-8", errors="replace") for q in "\u201c\u201d\u201e"):
+            hint = " Darin stehen typografische Anführungszeichen; JSON braucht gerade (\")."
+        raise Broken("{} unlesbar: {}.{}".format(path.name, error, hint))
 
 
 def save_state(state):
@@ -243,6 +248,8 @@ def status(day):
     if not state["starttag"]:
         print("Der Starttag ist noch nicht gesetzt. Er steht in Denis' Einladung, siehe EINRICHTUNG.md.")
         return 0
+    if in_git() and git("config", "core.hooksPath").stdout.strip() != ".githooks":
+        print("ACHTUNG: Der Commit-Schutz ist aus. Einschalten mit: git config core.hooksPath .githooks")
     start = parse_date(state["starttag"], "starttag")
     if day < start:
         print("Der Starttag ist {}. Bis dahin laufen keine Fristen.".format(start))
