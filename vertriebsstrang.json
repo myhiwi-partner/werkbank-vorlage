@@ -1,9 +1,10 @@
 {
   "schema": 1,
-  "vorlage_stand": "2026-10-05",
+  "vorlage_stand": "2026-10-05.2",
   "zaehlung": {
     "starttag": "Tag 0 ist der Starttag aus Denis' Einladung; Tag 2 ist zwei Kalendertage danach.",
-    "pause": "Eine Pause (von und bis jeweils eingeschlossen) verlängert jede Frist um ihre Tage, wenn sie spätestens an der bis dahin geltenden Frist beginnt."
+    "pause": "Eine Pause (von und bis jeweils eingeschlossen) verlängert jede Frist um ihre Tage, wenn sie spätestens an der bis dahin geltenden Frist beginnt.",
+    "frist": "Eine Frist ist erfüllt, wenn der Meilenstein erreicht ist; die Wiederholung ohne Hilfe zählt für bestanden, nicht für die Frist."
   },
   "meilensteine": [
     {

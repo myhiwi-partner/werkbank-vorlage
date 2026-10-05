@@ -127,6 +127,13 @@ class PruefenTest(RepoCase):
         self.write_state(**data)
         self.assertEqual(run(self.repo, "pruefen").returncode, 1)
 
+    def test_typographic_quotes_get_a_hint(self):
+        (self.repo / "werkbank.json").write_text('{"name": \u201eLena\u201c}\n', encoding="utf-8")
+        result = run(self.repo, "pruefen")
+        self.assertEqual(result.returncode, 1)
+        self.assertIn("typografische Anführungszeichen", result.stdout)
+        self.assertNotIn("Traceback", result.stdout + result.stderr)
+
     def test_gitignore_keeps_lists_out(self):
         ignore = (self.repo / ".gitignore").read_text(encoding="utf-8")
         for pattern in (".env", "*.csv", "*.xlsx", "heute/", "anrufe/", "listen/", "werkbank.local.json"):
@@ -287,6 +294,12 @@ class HookTest(RepoCase):
         (self.repo / ".env.production").write_text("KEY=abc\n", encoding="utf-8")
         self.git("add", "-f", ".env.production")
         self.assertNotEqual(self.git("commit", "-qm", "env").returncode, 0)
+
+    def test_status_warns_when_the_guard_is_off(self):
+        self.write_state(starttag="2026-10-05")
+        self.assertNotIn("Commit-Schutz ist aus", run(self.repo, "status", "--heute", "2026-10-06").stdout)
+        self.git("config", "core.hooksPath", ".githook")
+        self.assertIn("Commit-Schutz ist aus", run(self.repo, "status", "--heute", "2026-10-06").stdout)
 
     def test_clean_commit_passes(self):
         with (self.repo / "LERNLOG.md").open("a", encoding="utf-8") as handle:
