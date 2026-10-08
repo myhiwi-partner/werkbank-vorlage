@@ -1,5 +1,7 @@
 """Tests for scripts/werkbank.py, run from the repo root: python3 -m unittest discover tests"""
 import json
+import os
+import re
 import shutil
 import subprocess
 import sys
@@ -307,6 +309,31 @@ class HookTest(RepoCase):
         self.git("add", "LERNLOG.md")
         result = self.git("commit", "-qm", "erster Eintrag")
         self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+
+
+class SkillsTest(unittest.TestCase):
+    """The Stufe 2 skills ship in .agents/skills (Codex) and .claude/skills points there (Claude)."""
+
+    SKILLS = ("tagesbriefing", "nachbereitung", "info-nachricht", "gespraech-vorbereiten", "projektdarstellung")
+
+    def test_claude_skills_is_a_link_to_the_shared_folder(self):
+        link = ROOT / ".claude" / "skills"
+        self.assertTrue(link.is_symlink())
+        self.assertEqual(os.readlink(str(link)), "../.agents/skills")
+
+    def test_every_skill_has_matching_front_matter(self):
+        for name in self.SKILLS:
+            text = (ROOT / ".agents" / "skills" / name / "SKILL.md").read_text(encoding="utf-8")
+            head = text.split("---")[1]
+            self.assertIn("\nname: {}\n".format(name), head)
+            self.assertRegex(head, r"\ndescription: .*Use when ")
+
+    def test_no_skill_points_to_a_missing_skill(self):
+        known = set(self.SKILLS) | {"abschluss"}
+        for name in self.SKILLS:
+            text = (ROOT / ".agents" / "skills" / name / "SKILL.md").read_text(encoding="utf-8")
+            for other in re.findall(r"Skill `([a-z-]+)`", text):
+                self.assertIn(other, known, "{} verweist auf {}".format(name, other))
 
 
 if __name__ == "__main__":
