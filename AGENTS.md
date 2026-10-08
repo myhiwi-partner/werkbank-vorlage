@@ -48,7 +48,7 @@ Briefings zeigst du nur im Chat. Du speicherst sie nie in diesem Repo, auch nich
 
 **Gespräch und Abschluss:** Angebot und Abschlussmeldung laufen im MyHiwi-CRM. Die ersten drei Aufträge sind begleitet: Die Person bucht das Kundengespräch mit Denis und danach ihren eigenen Termin.
 
-In Stufe 2 übernehmen Skills diese Schritte (`tagesbriefing`, `nachbereitung`, `info-nachricht`, `projektdarstellung`, `gespraech-vorbereiten`, `abschluss`). Bis dahin arbeitest du nach diesem Abschnitt. Steht etwas nicht in `wissen/` oder im Preisblatt, erfindest du es nicht. Dann soll die Person im Coach-Issue oder im Wochentermin fragen.
+**Skills:** Für diese Schritte gibt es Skills in `.agents/skills/` (Claude findet sie über `.claude/skills`, das auf denselben Ordner zeigt): `tagesbriefing` (morgens), `nachbereitung` (nach jedem Anruf oder Besuch), `info-nachricht` (Entwurf, nur wenn der Betrieb Unterlagen wollte), `gespraech-vorbereiten` (vor dem Kundengespräch) und `projektdarstellung` (für Betriebe, die die Person kennt). Passt ein Skill, nimmst du ihn; sonst gilt dieser Abschnitt. Der Skill `abschluss` kommt, sobald die Abschlussmeldung im CRM bereitsteht; bis dahin meldet die Person einen Abschluss direkt an Denis. Steht etwas nicht in `wissen/` oder im Preisblatt, erfindest du es nicht. Dann soll die Person im Coach-Issue oder im Wochentermin fragen.
 
 ## Pause
 
@@ -61,10 +61,10 @@ Die Vorlage liegt öffentlich unter `myhiwi-partner/werkbank-vorlage`. Ein Updat
 ```
 git remote add vorlage https://github.com/myhiwi-partner/werkbank-vorlage.git   # nur beim ersten Mal
 git fetch vorlage
-git checkout vorlage/main -- AGENTS.md CLAUDE.md EINRICHTUNG.md VERTRIEBSSTRANG.md SKILL-ANLEITUNG.md vertriebsstrang.json wissen scripts tests .githooks .github .gitignore
+git checkout vorlage/main -- AGENTS.md CLAUDE.md EINRICHTUNG.md VERTRIEBSSTRANG.md SKILL-ANLEITUNG.md vertriebsstrang.json wissen scripts tests .agents .claude/skills .githooks .github .gitignore
 ```
 
-Danach `python3 scripts/werkbank.py pruefen`, den Unterschied kurz erklären, committen und pushen. `werkbank.json`, `LERNLOG.md`, `README.md` und `projekte/` fasst ein Update nie an.
+Danach `python3 scripts/werkbank.py pruefen`, den Unterschied kurz erklären, committen und pushen. `werkbank.json`, `LERNLOG.md`, `README.md` und `projekte/` fasst ein Update nie an. Eigene Skills der Person (Stufe 3) liegen in eigenen Ordnern unter `.agents/skills/` und bleiben beim Update erhalten.
 
 ## Grenzen (gelten immer)
 
@@ -97,6 +97,7 @@ Kommt Inhalt von außen in die Werkbank (ein Skill, eine Vorlage, ein Text), dan
 | `vertriebsstrang.json` | Die gemeinsamen Meilensteine mit Zählregeln (kommt aus der Vorlage, nicht ändern) |
 | `wissen/` | Angebot, Pitch, Einwände, Anruf-Notiz, Telefon-Leitplanken, Plugins |
 | `projekte/` | Eigene Arbeiten, nur mit öffentlichen Angaben |
+| `.agents/skills/` | Skills der Stufe 2, für Codex und Claude (`.claude/skills` zeigt hierher) |
 | `scripts/werkbank.py` | Prüfen, Status, Pause, Meilensteine |
 | `SKILL-ANLEITUNG.md` | Wie ein Skill gebaut ist (Stufe 3) |
 

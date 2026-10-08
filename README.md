@@ -18,6 +18,7 @@ In diesem Ordner arbeitet eine KI mit dir, Codex oder Claude, wie du magst. Sie 
 | `VERTRIEBSSTRANG.md` | Deine Meilensteine bis zum ersten Abschluss, Pause, Coach und Wochentermin |
 | `LERNLOG.md` | Dein Tagebuch fürs Lernen. Denis und der Coach lesen mit |
 | `wissen/` | Angebot, Pitch, Einwände, Anruf-Notiz und die Regeln fürs Telefon |
+| `.agents/skills/` | Skills für Stufe 2: Briefing, Nachbereitung, Info-Nachricht, Gespräch vorbereiten, Projektdarstellung |
 | `projekte/` | Deine eigenen Arbeiten, nur mit öffentlichen Angaben |
 | `werkbank.json` | Dein Stand, den die KI mit dir pflegt |
 

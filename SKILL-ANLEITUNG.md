@@ -5,14 +5,14 @@ Ein Skill ist eine Arbeitsanleitung für deine KI. Statt jedes Mal neu zu erklä
 ## Wo Skills liegen
 
 ```
-.claude/skills/
+.agents/skills/
 └── projektdarstellung/        ← ein Ordner pro Skill
     ├── SKILL.md               ← die Anleitung (Pflicht)
     └── references/            ← Zusatzwissen, das die KI bei Bedarf liest (optional)
         └── gliederung.md
 ```
 
-Bei Claude liegen Skills in `.claude/skills/` und gelten nur in diesem Repo. Codex sucht Skills an einem eigenen Ort; den richtet deine KI mit dir ein, wenn in Stufe 2 die ersten Skills dazukommen.
+Skills liegen in `.agents/skills/` und gelten nur in diesem Repo. Codex liest sie dort direkt. Claude sucht in `.claude/skills/`; das ist hier ein Verweis auf denselben Ordner, du pflegst also jeden Skill nur einmal. Die Skills der Stufe 2 (`tagesbriefing`, `nachbereitung`, `info-nachricht`, `gespraech-vorbereiten`, `projektdarstellung`) liegen schon dort und sind gute Beispiele.
 
 ## Die Datei SKILL.md
 

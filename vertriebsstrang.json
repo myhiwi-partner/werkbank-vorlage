@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "vorlage_stand": "2026-10-05.2",
+  "vorlage_stand": "2026-10-05.3",
   "zaehlung": {
     "starttag": "Tag 0 ist der Starttag aus Denis' Einladung; Tag 2 ist zwei Kalendertage danach.",
     "pause": "Eine Pause (von und bis jeweils eingeschlossen) verlängert jede Frist um ihre Tage, wenn sie spätestens an der bis dahin geltenden Frist beginnt.",
