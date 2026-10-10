@@ -16,4 +16,4 @@ Stand 05.10.2026, gepflegt von MyHiwi. Kurz antworten, dann eine Frage stellen o
 | Falsche Nummer, gibt es nicht mehr. | „Entschuldigung für die Störung. Schönen Tag noch.“ | `falsche_nummer` |
 | Beschwerde, Widerspruch, „Ich gehe zum Anwalt“. | „Das tut mir leid. Ich nehme Sie sofort aus der Liste und gebe es an Denis weiter.“ Beenden. | `nicht_mehr_anrufen`, Stichwort in die Notiz, Denis noch heute Bescheid geben |
 
-Wird nach etwas gefragt, das hier, in `pitch.md` und im Preisblatt nicht steht: „Das kläre ich und melde mich, wenn Sie das möchten.“ Dann im Wochentermin oder im Coach-Issue Denis fragen.
+Wird nach etwas gefragt, das hier, in `pitch.md` und im Preisblatt nicht steht: „Das kläre ich und melde mich, wenn Sie das möchten.“ Dann im Coach-Issue oder in einer Sprechstunde Denis fragen.

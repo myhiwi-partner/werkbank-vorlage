@@ -1,10 +1,12 @@
 {
   "schema": 1,
-  "vorlage_stand": "2026-10-05.3",
+  "vorlage_stand": "2026-10-10.1",
   "zaehlung": {
-    "starttag": "Tag 0 ist der Starttag aus Denis' Einladung; Tag 2 ist zwei Kalendertage danach.",
-    "pause": "Eine Pause (von und bis jeweils eingeschlossen) verlängert jede Frist um ihre Tage, wenn sie spätestens an der bis dahin geltenden Frist beginnt.",
-    "frist": "Eine Frist ist erfüllt, wenn der Meilenstein erreicht ist; die Wiederholung ohne Hilfe zählt für bestanden, nicht für die Frist."
+    "tempo": "Keine Fristen (Entscheidung Denis 2026-10-10). Wer mag, setzt sich je Meilenstein ein eigenes Ziel (werkbank.json, Feld ziel); ein vorbeigegangenes Ziel ist nur ein Hinweis.",
+    "starttag": "Der Tag von Denis' Einladung; nur zur Orientierung, ab ihm zählt nichts.",
+    "pause": "Während einer Pause ruhen Erinnerungen und Coach-Nachrichten.",
+    "bestanden": "Ein Meilenstein ist bestanden, wenn er einmal ohne Hilfe wiederholt wurde (außer bei wiederholung false).",
+    "frist_tag": "Bleibt aus Kompatibilität im Schema und ist immer null."
   },
   "meilensteine": [
     {
@@ -12,7 +14,7 @@
       "name": "Werkbank läuft",
       "stufe": 1,
       "bestanden_wenn": "erster eigener Commit mit Lernlog-Eintrag",
-      "frist_tag": 2,
+      "frist_tag": null,
       "wiederholung": true,
       "quelle": "werkbank"
     },
@@ -21,7 +23,7 @@
       "name": "Erste Tagesliste bearbeitet",
       "stufe": 2,
       "bestanden_wenn": "Briefing abgerufen, Anrufnotizen von der Werkbank in die Anrufliste geschrieben",
-      "frist_tag": 7,
+      "frist_tag": null,
       "wiederholung": true,
       "quelle": "werkbank"
     },
@@ -39,7 +41,7 @@
       "name": "Erster Abschluss",
       "stufe": 2,
       "bestanden_wenn": "Abschlussmeldung im CRM (begleiteter Auftrag)",
-      "frist_tag": 30,
+      "frist_tag": null,
       "wiederholung": false,
       "quelle": "crm"
     }

@@ -146,53 +146,44 @@ class StatusTest(RepoCase):
     def test_without_starttag(self):
         result = run(self.repo, "status", "--heute", "2026-10-05")
         self.assertEqual(result.returncode, 0)
-        self.assertIn("Starttag ist noch nicht gesetzt", result.stdout)
+        self.assertIn("Stufe 1. Dein Tempo, keine Fristen.", result.stdout)
+        self.assertIn("- Werkbank läuft: offen\n", result.stdout)
 
-    def test_deadlines_from_starttag(self):
+    def test_no_deadlines_from_starttag(self):
         self.write_state(starttag="2026-10-05")
-        out = run(self.repo, "status", "--heute", "2026-10-06").stdout
-        self.assertIn("Werkbank läuft: offen, Frist 2026-10-07", out)
-        self.assertIn("Erster Abschluss: offen, Frist 2026-11-04", out)
-        self.assertIn("Erstes Gespräch gebucht: offen, ohne Frist", out)
+        out = run(self.repo, "status", "--heute", "2026-12-20").stdout
+        self.assertIn("Dabei seit 2026-10-05", out)
+        self.assertIn("Werkbank läuft: offen\n", out)
+        self.assertNotIn("Frist 20", out)
+        self.assertNotIn("überfällig", out)
 
-    def test_overdue(self):
-        self.write_state(starttag="2026-10-05")
-        out = run(self.repo, "status", "--heute", "2026-10-08").stdout
-        self.assertIn("Werkbank läuft: überfällig seit 2026-10-07", out)
+    def test_every_milestone_is_without_deadline(self):
+        strang = json.loads((self.repo / "vertriebsstrang.json").read_text(encoding="utf-8"))
+        self.assertEqual({m["frist_tag"] for m in strang["meilensteine"]}, {None})
 
-    def test_pause_extends_deadlines(self):
-        self.write_state(starttag="2026-10-05", pausen=[{"von": "2026-10-06", "bis": "2026-10-10"}])
-        out = run(self.repo, "status", "--heute", "2026-10-12").stdout
-        # five pause days push day 2 from 10-07 to 10-12
-        self.assertIn("Werkbank läuft: offen, Frist 2026-10-12", out)
-        self.assertIn("Erster Abschluss: offen, Frist 2026-11-09", out)
+    def test_own_goal_is_shown(self):
+        data = self.state()
+        data["meilensteine"]["erste_tagesliste"]["ziel"] = "2026-10-20"
+        self.write_state(**data)
+        out = run(self.repo, "status", "--heute", "2026-10-10").stdout
+        self.assertIn("Erste Tagesliste bearbeitet: offen, dein Ziel 2026-10-20", out)
 
-    def test_pause_after_deadline_does_not_extend_it(self):
-        self.write_state(starttag="2026-10-05", pausen=[{"von": "2026-10-20", "bis": "2026-10-21"}])
-        out = run(self.repo, "status", "--heute", "2026-10-22").stdout
-        self.assertIn("Werkbank läuft: überfällig seit 2026-10-07", out)
-        self.assertIn("Erster Abschluss: offen, Frist 2026-11-06", out)
+    def test_passed_goal_is_a_hint_not_overdue(self):
+        data = self.state()
+        data["meilensteine"]["erste_tagesliste"]["ziel"] = "2026-10-20"
+        self.write_state(**data)
+        out = run(self.repo, "status", "--heute", "2026-10-25").stdout
+        self.assertIn("dein Ziel 2026-10-20 ist vorbei (neu setzen oder streichen", out)
+        self.assertNotIn("überfällig", out)
 
     def test_active_pause_is_shown(self):
         self.write_state(starttag="2026-10-05", pausen=[{"von": "2026-10-06", "bis": "2026-10-20"}])
         out = run(self.repo, "status", "--heute", "2026-10-08").stdout
         self.assertIn("Pause bis 2026-10-20", out)
 
-    def test_missed_deadline_stays_missed_during_later_pause(self):
-        self.write_state(starttag="2026-10-05", pausen=[{"von": "2026-10-15", "bis": "2026-10-25"}])
-        out = run(self.repo, "status", "--heute", "2026-10-20").stdout
-        self.assertIn("Pause bis 2026-10-25", out)
-        self.assertIn("Werkbank läuft: überfällig seit 2026-10-07", out)
-
-    def test_before_starttag(self):
-        self.write_state(starttag="2026-10-10")
-        out = run(self.repo, "status", "--heute", "2026-10-06").stdout
-        self.assertIn("Der Starttag ist 2026-10-10", out)
-
     def test_crm_milestones_wait_for_coach(self):
-        self.write_state(starttag="2026-10-05")
         out = run(self.repo, "status", "--heute", "2026-10-06").stdout
-        self.assertIn("Erster Abschluss: offen, Frist 2026-11-04 (zählt, wenn der Coach es im CRM sieht)", out)
+        self.assertIn("Erster Abschluss: offen (zählt, wenn der Coach es im CRM sieht)", out)
 
     def test_milestone_needs_repetition(self):
         data = self.state()
@@ -250,6 +241,24 @@ class SchreibenTest(RepoCase):
 
     def test_unknown_milestone_is_refused(self):
         self.assertEqual(run(self.repo, "meilenstein", "foo", "erreicht").returncode, 2)
+
+    def test_goal_set_and_removed(self):
+        self.assertEqual(run(self.repo, "ziel", "erste_tagesliste", "--bis", "2026-10-20",
+                             "--heute", "2026-10-10").returncode, 0)
+        self.assertEqual(self.state()["meilensteine"]["erste_tagesliste"]["ziel"], "2026-10-20")
+        self.assertEqual(run(self.repo, "pruefen").returncode, 0)
+        self.assertEqual(run(self.repo, "ziel", "erste_tagesliste", "--weg").returncode, 0)
+        self.assertNotIn("ziel", self.state()["meilensteine"]["erste_tagesliste"])
+
+    def test_goal_in_the_past_is_refused(self):
+        result = run(self.repo, "ziel", "erste_tagesliste", "--bis", "2026-10-01", "--heute", "2026-10-10")
+        self.assertEqual(result.returncode, 2)
+
+    def test_bad_goal_date_fails_check(self):
+        data = self.state()
+        data["meilensteine"]["erste_tagesliste"]["ziel"] = "bald"
+        self.write_state(**data)
+        self.assertNotEqual(run(self.repo, "pruefen").returncode, 0)
 
 
 class HookTest(RepoCase):
@@ -314,7 +323,9 @@ class HookTest(RepoCase):
 class SkillsTest(unittest.TestCase):
     """The Stufe 2 skills ship in .agents/skills (Codex) and .claude/skills points there (Claude)."""
 
-    SKILLS = ("tagesbriefing", "nachbereitung", "info-nachricht", "gespraech-vorbereiten", "projektdarstellung")
+    SKILLS = (
+        "tagesbriefing", "nachbereitung", "info-nachricht", "gespraech-vorbereiten", "abschluss", "projektdarstellung",
+    )
 
     def test_claude_skills_is_a_link_to_the_shared_folder(self):
         link = ROOT / ".claude" / "skills"
@@ -329,7 +340,7 @@ class SkillsTest(unittest.TestCase):
             self.assertRegex(head, r"\ndescription: .*Use when ")
 
     def test_no_skill_points_to_a_missing_skill(self):
-        known = set(self.SKILLS) | {"abschluss"}
+        known = set(self.SKILLS)
         for name in self.SKILLS:
             text = (ROOT / ".agents" / "skills" / name / "SKILL.md").read_text(encoding="utf-8")
             for other in re.findall(r"Skill `([a-z-]+)`", text):
