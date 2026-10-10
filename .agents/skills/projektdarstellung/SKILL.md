@@ -24,7 +24,7 @@ Ergebnis ist **ein** Dokument pro Betrieb, das die Person Denis zeigt und, nach 
 4. **Schreiben** nach `references/gliederung.md` in `projekte/<betrieb>/projektdarstellung_<JJJJ-MM-TT>.md`. Für „Wie eine Lösung aussehen könnte“ `wissen/webseiten-angebot.md` lesen. Keine Preise.
    Fertig, wenn alle Abschnitte gefüllt oder ausdrücklich als offen markiert sind.
 
-5. **Abschluss.** Daran erinnern: Das ist ein Entwurf. Bevor der Betrieb es sieht, schaut Denis drauf (im Wochentermin oder als Frage im Coach-Issue). Lernlog-Eintrag anbieten, dann committen und pushen.
+5. **Abschluss.** Daran erinnern: Das ist ein Entwurf. Bevor der Betrieb es sieht, schaut Denis drauf (als Frage im Coach-Issue oder in einer Sprechstunde). Lernlog-Eintrag anbieten, dann committen und pushen.
 
 ## Leitplanken
 

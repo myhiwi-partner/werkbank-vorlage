@@ -1,6 +1,6 @@
 # Deine Werkbank
 
-Das hier ist deine Werkbank für den Webseiten-Vertrieb bei MyHiwi. Ein Repo ist ein Ordner, der sich jede Änderung merkt und den du auf GitHub sicherst. Die Werkbank liegt in deinem eigenen GitHub-Konto und gehört dir, auch wenn du MyHiwi irgendwann verlässt.
+Das hier ist deine Werkbank. Mit ihr lernst du an echten MyHiwi-Produkten, eine eigene KI-Agentur zu führen, und du fängst im Webseiten-Vertrieb an. Dein Tempo, keine Fristen. Ein Repo ist ein Ordner, der sich jede Änderung merkt und den du auf GitHub sicherst. Die Werkbank liegt in deinem eigenen GitHub-Konto und gehört dir, auch wenn du MyHiwi irgendwann verlässt.
 
 In diesem Ordner arbeitet eine KI mit dir, Codex oder Claude, wie du magst. Sie ist als Lernbegleiter eingestellt: Neues machst du zuerst selbst, sie erklärt dir das Warum. Das ist am Anfang langsamer, dafür kannst du es danach allein.
 
@@ -15,10 +15,10 @@ In diesem Ordner arbeitet eine KI mit dir, Codex oder Claude, wie du magst. Sie 
 | Datei | Wofür |
 |---|---|
 | `EINRICHTUNG.md` | Einrichtung Schritt für Schritt |
-| `VERTRIEBSSTRANG.md` | Deine Meilensteine bis zum ersten Abschluss, Pause, Coach und Wochentermin |
+| `VERTRIEBSSTRANG.md` | Deine Meilensteine bis zum ersten Abschluss, eigene Ziele, Pause, Coach und Sprechstunde |
 | `LERNLOG.md` | Dein Tagebuch fürs Lernen. Denis und der Coach lesen mit |
-| `wissen/` | Angebot, Pitch, Einwände, Anruf-Notiz und die Regeln fürs Telefon |
-| `.agents/skills/` | Skills für Stufe 2: Briefing, Nachbereitung, Info-Nachricht, Gespräch vorbereiten, Projektdarstellung |
+| `wissen/` | Angebot, Pitch, Einwände, Anruf-Notiz, Regeln fürs Telefon und Lernfälle |
+| `.agents/skills/` | Skills für Stufe 2: Briefing, Nachbereitung, Info-Nachricht, Gespräch vorbereiten, Abschluss, Projektdarstellung |
 | `projekte/` | Deine eigenen Arbeiten, nur mit öffentlichen Angaben |
 | `werkbank.json` | Dein Stand, den die KI mit dir pflegt |
 
@@ -36,3 +36,5 @@ In diesem Ordner arbeitet eine KI mit dir, Codex oder Claude, wie du magst. Sie 
 4. **Mit Kundendaten arbeiten:** gesperrt, kommt später je Person.
 
 Eine Stufe hast du geschafft, wenn du sie einmal ganz allein wiederholt hast.
+
+Die Stufen zeigen, wie sicher du mit den Werkzeugen bist. Was eine Agentur insgesamt können muss, steht als acht Kompetenzen in `LERNLOG.md`. Die lernst du an ganzen Fällen, der erste steht in `wissen/lernfaelle/webseite.md`.

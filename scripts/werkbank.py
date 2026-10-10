@@ -1,11 +1,15 @@
 #!/usr/bin/env python3
-"""Werkbank helper: check the repo, show the Vertriebsstrang, set a pause, record milestones.
+"""Werkbank helper: check the repo, show the Vertriebsstrang, set a pause, record milestones and goals.
 
 Usage (from the repo root):
   python3 scripts/werkbank.py pruefen [--staged]
   python3 scripts/werkbank.py status
   python3 scripts/werkbank.py pause --bis JJJJ-MM-TT | --ende
   python3 scripts/werkbank.py meilenstein <id> erreicht|allein [--am JJJJ-MM-TT]
+  python3 scripts/werkbank.py ziel <id> --bis JJJJ-MM-TT | --weg
+
+There are no imposed deadlines (Denis' decision of 2026-10-10): a milestone has at most a goal the
+person sets herself, and a passed goal is information, never "overdue".
 
 werkbank.json holds the person's state, vertriebsstrang.json the shared milestone definitions,
 werkbank.local.json (git-ignored) the machine-specific Drive path and the last-read marker.
@@ -94,16 +98,6 @@ def pause_days(pause):
     return (parse_date(pause["bis"], "bis") - parse_date(pause["von"], "von")).days + 1
 
 
-def deadline(start, days, pauses):
-    """Day `days` after the Starttag (Tag 0), pushed back by every pause that begins on or before
-    the running deadline, by the pause's length in days (both ends included)."""
-    due = start + dt.timedelta(days=days)
-    for pause in sorted(pauses, key=lambda p: p["von"]):
-        if parse_date(pause["von"], "von") <= due:
-            due += dt.timedelta(days=pause_days(pause))
-    return due
-
-
 def active_pause(pauses, day):
     for pause in pauses:
         if parse_date(pause["von"], "von") <= day <= parse_date(pause["bis"], "bis"):
@@ -182,7 +176,7 @@ def check_state(state, defs):
             problems.append("werkbank.json: Meilenstein {} muss ein Objekt sein".format(key))
             continue
         dates = {}
-        for field in ("erreicht", "allein_wiederholt"):
+        for field in ("erreicht", "allein_wiederholt", "ziel"):
             if value.get(field) is not None:
                 try:
                     dates[field] = parse_date(value[field], "{}.{}".format(key, field))
@@ -245,31 +239,28 @@ def status(day):
     if check_state(state, milestones()):
         print("werkbank.json hat Fehler. Bitte zuerst `python3 scripts/werkbank.py pruefen`.")
         return 1
-    if not state["starttag"]:
-        print("Der Starttag ist noch nicht gesetzt. Er steht in Denis' Einladung, siehe EINRICHTUNG.md.")
-        return 0
     if in_git() and git("config", "core.hooksPath").stdout.strip() != ".githooks":
         print("ACHTUNG: Der Commit-Schutz ist aus. Einschalten mit: git config core.hooksPath .githooks")
-    start = parse_date(state["starttag"], "starttag")
-    if day < start:
-        print("Der Starttag ist {}. Bis dahin laufen keine Fristen.".format(start))
-        return 0
-    print("Starttag {}, heute Tag {}, Stufe {}.".format(start, (day - start).days, state["stufe"]))
+    head = "Stufe {}.".format(state["stufe"])
+    if state["starttag"]:
+        head = "Dabei seit {}, {}".format(parse_date(state["starttag"], "starttag"), head)
+    print(head + " Dein Tempo, keine Fristen.")
     pause = active_pause(state["pausen"], day)
     if pause:
-        print("Pause bis {}. Fristen und Coach-Nachrichten ruhen.".format(pause["bis"]))
+        print("Pause bis {}. Erinnerungen und Coach-Nachrichten ruhen.".format(pause["bis"]))
     for m in milestones():
         record = state["meilensteine"][m["id"]]
-        reached, repeated = record.get("erreicht"), record.get("allein_wiederholt")
+        reached, repeated, goal = record.get("erreicht"), record.get("allein_wiederholt"), record.get("ziel")
         if reached and (repeated or not m["wiederholung"]):
             line = "bestanden am {}".format(repeated or reached)
         elif reached:
             line = "erreicht am {}, allein wiederholen fehlt noch".format(reached)
-        elif m["frist_tag"] is None:
-            line = "offen, ohne Frist"
+        elif goal and day > parse_date(goal, "ziel"):
+            line = "offen, dein Ziel {} ist vorbei (neu setzen oder streichen, beides ist in Ordnung)".format(goal)
+        elif goal:
+            line = "offen, dein Ziel {}".format(goal)
         else:
-            due = deadline(start, m["frist_tag"], state["pausen"])
-            line = "überfällig seit {}".format(due) if day > due else "offen, Frist {}".format(due)
+            line = "offen"
         if m.get("quelle") == "crm" and not reached:
             line += " (zählt, wenn der Coach es im CRM sieht)"
         print("- {}: {}".format(m["name"], line))
@@ -323,6 +314,25 @@ def meilenstein(key, what, day):
     return 0
 
 
+def ziel(key, bis, weg, day):
+    state = load(STATE)
+    if key not in state["meilensteine"]:
+        print("Unbekannter Meilenstein {}. Möglich: {}".format(key, ", ".join(state["meilensteine"])))
+        return 2
+    record = state["meilensteine"][key]
+    if weg:
+        record.pop("ziel", None)
+    else:
+        goal = parse_date(bis, "bis")
+        if goal < day:
+            print("Das Ziel liegt in der Vergangenheit.")
+            return 2
+        record["ziel"] = goal.isoformat()
+    save_state(state)
+    print("Gespeichert. Das Ziel ist deins: ändern oder streichen geht jederzeit.")
+    return 0
+
+
 def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     sub = parser.add_subparsers(dest="command", required=True)
@@ -339,6 +349,12 @@ def main(argv=None):
     p_ms.add_argument("id")
     p_ms.add_argument("was", choices=("erreicht", "allein"))
     p_ms.add_argument("--am")
+    p_goal = sub.add_parser("ziel")
+    p_goal.add_argument("id")
+    goal_group = p_goal.add_mutually_exclusive_group(required=True)
+    goal_group.add_argument("--bis")
+    goal_group.add_argument("--weg", action="store_true")
+    p_goal.add_argument("--heute")
     args = parser.parse_args(argv)
     try:
         if args.command == "pruefen":
@@ -347,6 +363,8 @@ def main(argv=None):
             return status(today(args.heute))
         if args.command == "pause":
             return pause(args.bis, args.ende, today(args.heute))
+        if args.command == "ziel":
+            return ziel(args.id, args.bis, args.weg, today(args.heute))
         return meilenstein(args.id, args.was, today(args.am))
     except (Broken, ValueError) as error:
         print(error)

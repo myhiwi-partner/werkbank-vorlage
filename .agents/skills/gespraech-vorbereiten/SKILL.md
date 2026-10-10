@@ -24,7 +24,7 @@ Ergebnis ist ein Briefing für das Kundengespräch, das die Person ausgedruckt o
 
 4. **Ablegen.** Im Chat zeigen. Will die Person es speichern, dann in `projekte/<betrieb>/gespraech_<JJJJ-MM-TT>.md`, nur mit öffentlichen Angaben: keine Telefonnummer, keine Notizen aus der Anrufliste, keine Namen von Personen außer der Rolle (Inhaberin, Inhaber).
 
-5. **Nach dem Gespräch.** Ergebnis mit dem Skill `nachbereitung` eintragen. Bei begleiteten Aufträgen gemeinsam mit Denis nachbesprechen; ein echtes Gespräch der Woche kommt in den Wochentermin.
+5. **Nach dem Gespräch.** Ergebnis mit dem Skill `nachbereitung` eintragen. Bei begleiteten Aufträgen gemeinsam mit Denis nachbesprechen; wer mag, bespricht ein Gespräch in der nächsten Sprechstunde nach.
 
 ## Leitplanken
 

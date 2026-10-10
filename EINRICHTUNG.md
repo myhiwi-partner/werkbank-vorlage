@@ -4,14 +4,14 @@ Du richtest deine Werkbank selbst ein. Plane ein bis zwei Stunden ein, am besten
 
 Hängst du in Teil A oder B, öffne Claude oder ChatGPT im normalen Chat, füge diese Seite ein und schreib, bei welchem Schritt du bist. Die KI hilft dir dann weiter.
 
-**Für die KI (ab Teil C):** Prüfe zuerst das „Fertig, wenn“ jedes Schritts von oben nach unten und mach beim ersten offenen weiter. Führe immer nur einen Schritt auf einmal. Sag vorher in einem Satz, was passiert und warum. Neue Befehle tippt die Person selbst ins Terminal, du zeigst sie. Hängt ein Schritt, such mit ihr den kleinsten nächsten Schritt. Klappt er auch beim zweiten Versuch nicht, notiert ihr es im Lernlog unter „Hängt“, und sie fragt Denis im Wochentermin oder per Antwort auf seine Einladung.
+**Für die KI (ab Teil C):** Prüfe zuerst das „Fertig, wenn“ jedes Schritts von oben nach unten und mach beim ersten offenen weiter. Führe immer nur einen Schritt auf einmal. Sag vorher in einem Satz, was passiert und warum. Neue Befehle tippt die Person selbst ins Terminal, du zeigst sie. Hängt ein Schritt, such mit ihr den kleinsten nächsten Schritt. Klappt er auch beim zweiten Versuch nicht, notiert ihr es im Lernlog unter „Hängt“, und sie fragt Denis im Coach-Issue oder per Antwort auf seine Einladung.
 
 ## Teil A: im Browser
 
 **A1. GitHub-Konto mit Zwei-Faktor.** Hast du noch kein GitHub-Konto, leg eins auf github.com an. Schalte unter Settings, Password and authentication, die Zwei-Faktor-Anmeldung ein. MyHiwi verlangt das. Schick Denis dann deinen GitHub-Namen und die Google-Adresse, mit der du Google Drive nutzt.
 Fertig, wenn GitHub die Zwei-Faktor-Anmeldung als aktiv zeigt und Denis deinen GitHub-Namen hat.
 
-**A2. Einladungen annehmen.** Denis schickt dir zwei Einladungen: eine zu deinem Auftrags-Repo `myhiwi-partner/<name>` auf GitHub (dort siehst du später deine Aufträge und die Hinweise vom Coach) und eine zu deinem Drive-Ordner „MyHiwi Webseiten-Vertrieb <Vorname>“. In seiner Nachricht stehen der Name deines Auftrags-Repos und dein **Starttag**. Ab ihm zählen die Fristen im Vertriebsstrang.
+**A2. Einladungen annehmen.** Denis schickt dir zwei Einladungen: eine zu deinem Auftrags-Repo `myhiwi-partner/<name>` auf GitHub (dort siehst du später deine Aufträge und die Hinweise vom Coach) und eine zu deinem Drive-Ordner „MyHiwi Webseiten-Vertrieb <Vorname>“. In seiner Nachricht stehen der Name deines Auftrags-Repos und dein **Starttag**. Er ist nur der Tag, an dem es losgeht; Fristen gibt es keine.
 Fertig, wenn du beide Einladungen angenommen hast und `github.com/myhiwi-partner/<name>` im Browser öffnen kannst.
 
 **A3. Werkbank erzeugen.** Öffne `https://github.com/myhiwi-partner/werkbank-vorlage`, klick auf „Use this template“, dann „Create a new repository“. Besitzer: dein eigenes Konto. Name: `werkbank`. Sichtbarkeit: Private.
@@ -65,7 +65,7 @@ Fertig, wenn die KI den Ordner sehen kann. `heute/` kann am ersten Tag noch fehl
 - `werkbank.local.json` (aus `werkbank.local.example.json`): `drive_ordner` ist der Pfad aus C4. Diese Datei bleibt auf deinem Rechner und wird nie hochgeladen.
 - `werkbank.json`: `name` (dein Vorname), `github` (dein GitHub-Name), `werkzeug` (`codex` oder `claude`), `starttag` (das Datum aus Denis' Nachricht, als `JJJJ-MM-TT`), `auftrags_repo` (`myhiwi-partner/<name>`). Den Rest lässt du, wie er ist.
 
-Fertig, wenn `python3 scripts/werkbank.py pruefen` mit „OK“ endet und `python3 scripts/werkbank.py status` deinen Starttag zeigt.
+Fertig, wenn `python3 scripts/werkbank.py pruefen` mit „OK“ endet und `python3 scripts/werkbank.py status` „Dabei seit“ mit deinem Starttag zeigt.
 
 **C6. Erster Lernlog-Eintrag und erster Commit.** Du erzählst, was du heute eingerichtet hast und wo es gehakt hat; die KI schreibt den Eintrag in `LERNLOG.md`, du liest gegen. Dann tippst du selbst im Terminal:
 `git add LERNLOG.md werkbank.json`, dann `git commit -m "Werkbank eingerichtet"`, dann `git push`.
@@ -76,4 +76,4 @@ Fertig, wenn dein Commit auf GitHub zu sehen ist und die Prüfung dort grün ist
 
 ## Danach
 
-Der erste Wochentermin mit Denis ist euer Start. Bring mit, was im Lernlog unter „Hängt“ steht. Wie es weitergeht, steht in `VERTRIEBSSTRANG.md`.
+Wenn du magst, verabredest du jetzt eine erste Sprechstunde mit Denis. Bring mit, was im Lernlog unter „Hängt“ steht. Wie es weitergeht, steht in `VERTRIEBSSTRANG.md`.
